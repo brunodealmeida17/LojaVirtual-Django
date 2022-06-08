@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 
 {% load static %}
+{% load product_tags %}
+
 
 <head>
     <meta charset="utf-8" />
@@ -23,8 +25,27 @@
         <div class="collapse navbar-collapse" id="mainMenu">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item" >
-                <a class="nav-link"> Home <span class="sr-only"></span> </a>
-            </li>       
+                <a class="nav-link" href="{% url 'products:list' %}"> Produtos <span class="sr-only"></span> </a>
+            </li> 
+            <li class="nav-item" >
+                <a class="nav-link" href="{% url 'pages:about' %}"> Sobre o projeto <span class="sr-only"></span> </a>
+            </li>  
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Categorias
+                </a>
+                
+                <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
+                {% for cat in categories %}    
+                    <a class="dropdown-item bg-dark{% if category == cat %}active{% endif %}"
+                    href="{{ cat.get_absolute_url }}">
+                    {{ cat.name }}
+                    </a> 
+                {% endfor %}
+                  </div>
+              </li>
+            <li class="nav-item" >
+                
 
 
         </ul>                       

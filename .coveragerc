@@ -2,5 +2,5 @@
 omit =
     *migrations*,
     *tests*,
-    pystore*
+    lojapy*
     conftest.py
