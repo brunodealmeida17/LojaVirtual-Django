@@ -5,20 +5,51 @@
 {% block title %}{{ product.name }}{% endblock title %}
 
 {% block content %}
-
 <div class="container my-3">
     <div class="row">
-        <div class="col-lg-3 mb-3 mb-lg-0">
+        <div class="col-6 mb-3 mb-lg-0">
             {% if product.image %}
             <img class="container-fluid" src="/media/{{product.image}}" alt="">
             {% else %}
-            <img class="card-img-top" src="{% static 'images/no_photo.jpg' %}" alt="">
+            <img class="card-img-top" src="https://via.placeholder.com/600X300.png?text=sem_foto" alt="">
             {% endif %}
+            <div class="row">
+                {% for images in product.images_set.all %}
+                    <div class="col-3 ml-3">
+                        <img class="img-fluid mt-2" src="/media/{{images.image}}" alt="">
+                    </div>
+                {% endfor %}
+             </div>
+
+
         </div>
-        <div class="col-lg-9">
+        <div class="col-6">
             <h1 class="font-weight-bold">{{ product.name }}</h1>
-            <h2>R$ {{ product.price }}</h2>
             <p>{{ product.description }}</p>
+            
+            {% if product.promotion == 0 %}
+                <span class="product-price">
+                    R$: {{product.price}}
+                </span>
+           {% else %}
+                <span class="product-price">
+                R$: {{product.price}}
+                </span>
+                <span class="product-old-price ">
+                {{ product.promotion}}
+                </span> 
+            {% endif %}
+            <p>
+                {% if product.type == 'S'%}
+                  <select name="vid" id="select-variacao" class="form-control form-control-lg">
+                        {% for variation in product.variation_set.all %}
+                            <option value="{{variation.preco}}">
+                                {{variation.nome}}
+                            </option>                   
+                        {% endfor %}        
+                  </select>    
+                {% endif %} 
+            </p>                        
             <p>
                 Voltar para o catálogo de
                 <a class="text-decoration-none" href="{{ product.category.get_absolute_url }}">
@@ -27,6 +58,9 @@
             </p>
         </div>
     </div>
+    <hr>
+<h4>{{ product.information }}</h4>
+
 </div>
 
 {% endblock content %}

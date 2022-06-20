@@ -1,23 +1,33 @@
 from django.contrib import admin
 
-from .models import Category, Product
+from . import models
+
+admin.site.site_header = 'your_header'
+admin.site.site_title = 'site_title'
+admin.site.index_title = 'Painel administrative da loja'
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ["name", "slug", "created", "modified"]
 
+class Meta:
+    verbose_name="Produto"
+    verbose_name_plural="Produtos"
 
-@admin.register(Product)
+class VariationInline(admin.TabularInline):
+    model = models.Variation   
+    extra = 1
+    
+class ImageInline(admin.TabularInline):
+    model = models.Images
+    extra = 2
+   
 class ProductAdmin(admin.ModelAdmin):
-    list_display = [
-        "name",
-        "slug",
-        "category",
-        "price",
-        "is_available",
-        "created",
-        "modified",
-    ]
-    list_filter = ["is_available", "created", "modified"]
-    list_editable = ["price", "is_available"]
+    inlines = [VariationInline, ImageInline]
+    
+  
+
+
+
+admin.site.register(models.Category, verbose_name="Categoria")
+admin.site.register(models.Product, ProductAdmin, verbose_name="Produtos")
+admin.site.register(models.Variation)
+admin.site.register(models.Images)

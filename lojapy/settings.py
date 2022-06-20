@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
     'products.apps.ProductsConfig',
+    'orders.apps.OrdersConfig',
     
     #TODO remover apos development
     "debug_toolbar",
@@ -163,3 +164,8 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/accounts/login'
+LOGOUT_REDIRECT_URL = '/users/login'
